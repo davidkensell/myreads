@@ -4,23 +4,24 @@ import * as BooksAPI from './BooksAPI'
 import './App.css';
 import Mover from './components/Mover.js';
 
-
-class Book extends React.Component {
+class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      /**
-      *TODO: bookshelf, maybe cover, title, author?
-      */
+      showSearchPage: false,
+      books: [],
     };
   }
-}
 
+  componentDidMount() {
+    this.getBooks();
+  }
 
-class BooksApp extends React.Component {
-  state = {
-    showSearchPage: false,
-    books: []
+  getBooks() {
+    BooksAPI.getAll()
+      .then(books => this.setState({books: books}))
+      .catch()
+
   }
 
   render() {
