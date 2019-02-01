@@ -1,16 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Book from './Book.js';
 
 
 class Shelf extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shelfBooks: [],
-    }
-  }
 
   render() {
 	return (
@@ -22,6 +15,7 @@ class Shelf extends React.Component {
           <li key={book.id}>
             <Book 
               book={book}
+              action={this.props.action} 
               />
           </li>
           )}

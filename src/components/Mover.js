@@ -3,19 +3,12 @@ import React from 'react';
 class Mover extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {value: ''};
-
-		this.handleChange = this.handleChange.bind(this);
-	}
-
-	handleChange(event) {
-		this.setState({value: event.target.value});
 	}
 
 	render() {
 		return (
 			<div className="book-shelf-changer">
-              <select value={this.state.value} onChange={this.handleChange}>
+              <select value={this.props.book.shelf} onChange={(e) => this.props.action(this.props.book, e.target.value)}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
