@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Mover from './Mover.js';
 
 class Book extends React.Component {

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Shelf from './Shelf.js';
 
 function AllShelves(props) {
