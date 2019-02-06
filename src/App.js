@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 import AllShelves from './components/AllShelves.js';
@@ -16,20 +15,34 @@ class BooksApp extends React.Component {
     };
   }
 
-  handleMove(book, shelf) {
-    BooksAPI.update(book, shelf)
-     .then(this.getBooks())
-     .catch(console.log('Failed move'))
-    }
-
   componentDidMount() {
     this.getBooks();
+  }
+
+  handleMove(book, shelf) {
+    //copy and edit local book list for fast render while async in background
+    //TODO: Could I map this?
+    const copyBooks = this.state.books.slice();
+    const bookID = book.id;
+    const index = copyBooks.findIndex(book => book.id === bookID);
+    const movingBook = copyBooks[index];
+      movingBook.shelf = shelf;
+      copyBooks.splice(index, 1, movingBook);
+
+    this.setState ({ books: copyBooks })
+
+    BooksAPI.update(book, shelf)
+     .catch(function(error) {
+        console.log("failed API book move", error); 
+    })
   }
 
   getBooks() {
     BooksAPI.getAll()
       .then(books => this.setState({books: books}))
-      .catch(console.log('Failed to get books'))
+      .catch(function(error) {
+        console.log("failed book fetch", error);
+      })
   }
 
   searchClose() {
