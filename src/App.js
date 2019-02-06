@@ -42,6 +42,7 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage ? (
           <Search 
             close={this.searchClose}
+            action={this.handleMove}
             />
         ) : (
           <div className="list-books">
