@@ -9,23 +9,27 @@ class Search extends React.Component {
     this.state= {
       results: [],
       query: '',
+      error: false,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event){
-    this.setState({query: event.target.value});
-  }
+    const query = event.target.value;
+    this.setState({query: query});
 
-  handleSubmit(event){
-    event.preventDefault();
-    BooksAPI.search(this.state.query)
-      .then(books => this.setState({results: books}))
-      .catch(function(error) {
-        console.log("failed submit", error);
-      })
-  }
+    if (query) {
+      BooksAPI.search(query)
+      .then(books => {
+        if (books.length > 0) {
+          this.setState({results: books});
+        } else {
+          this.setState({results: []});
+          this.setState({error: true});
+          }
+        })
+      }
+    }
 
 render() {
 
@@ -34,17 +38,16 @@ render() {
       <div className="search-books-bar">
         <button className="close-search" onClick={this.props.close}>Close</button>
         <div className="search-books-input-wrapper">
-          <form onSubmit={this.handleSubmit}>
-            <input 
-            type="text" 
-            placeholder="Search by title or author"
-            onChange={this.handleChange}
-            onSubmit={this.handleSubmit}/>
-            <input type="submit" value="Submit" className="search-books-submit"/>   
-          </form>       
+          <input 
+          type="text" 
+          placeholder="Search by title or author"
+          value={this.state.query}
+          onChange={this.handleChange}
+          />
         </div>
       </div>
       <div className="search-books-results">
+        {this.state.results.length > 0 && (
         <ol className="books-grid">
          {this.state.results.map(book => 
             <li key={book.id}>
@@ -57,6 +60,10 @@ render() {
             </li>
             )}
         </ol>
+        )}
+        {this.state.error && (
+          <h3>No results found.</h3>
+          )}
       </div>
     </div>
   )
