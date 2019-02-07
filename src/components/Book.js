@@ -13,7 +13,8 @@ class Book extends React.Component {
               backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
             }}>
             </div>
-            <Mover 
+            <Mover
+              books={this.props.books}
               book={this.props.book}
               action={this.props.action} 
             />

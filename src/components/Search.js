@@ -22,6 +22,9 @@ class Search extends React.Component {
     event.preventDefault();
     BooksAPI.search(this.state.query)
       .then(books => this.setState({results: books}))
+      .catch(function(error) {
+        console.log("failed submit", error);
+      })
   }
 
 render() {
@@ -47,7 +50,9 @@ render() {
             <li key={book.id}>
               <Book 
                 book={book}
+                books={this.props.books}
                 action={this.props.action} 
+                results={this.state.results}
                 />
             </li>
             )}

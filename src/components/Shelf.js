@@ -14,6 +14,7 @@ class Shelf extends React.Component {
             <li key={book.id}>
               <Book 
                 book={book}
+                books={this.props.books}
                 action={this.props.action} 
                 />
             </li>

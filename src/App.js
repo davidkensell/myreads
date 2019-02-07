@@ -21,16 +21,27 @@ class BooksApp extends React.Component {
 
   handleMove(book, shelf) {
     //copy and edit local book list for fast render while async in background
-    //TODO: Could I map this?
-    const copyBooks = this.state.books.slice();
+
+    // copy so can manipulate before setting state
+    let copyBooks = this.state.books.slice();
+
+    // add books from search results if not already found
+    if (copyBooks.includes(book)) {
+      console.log('book already included');
+    } else {
+      copyBooks.push(book);
+    }
+
+    // identify book and move shelf in our copy
     const bookID = book.id;
     const index = copyBooks.findIndex(book => book.id === bookID);
     const movingBook = copyBooks[index];
       movingBook.shelf = shelf;
       copyBooks.splice(index, 1, movingBook);
 
+    // update state
     this.setState ({ books: copyBooks })
-
+    // call API
     BooksAPI.update(book, shelf)
      .catch(function(error) {
         console.log("failed API book move", error); 
@@ -56,6 +67,7 @@ class BooksApp extends React.Component {
           <Search 
             close={this.searchClose}
             action={this.handleMove}
+            books={this.state.books}
             />
         ) : (
           <div className="list-books">
