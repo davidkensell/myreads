@@ -1,5 +1,7 @@
 # MyReads Project
 
+Demo: https://davidkensell.github.io/myreads/
+
 This React app is a reading library manager *cough* Goodreads clone *cough* that allows you to search for books and mark them as reading, read, and want to read. It uses a backend API with limited search terms.
 
 This is a project from Udacity's React course ([source repo](https://github.com/udacity/reactnd-project-myreads-starter)). The starter template provided a static example with CSS and HTML, but no React code or interactivity. I refactored the static page into a React app.
